@@ -11,11 +11,11 @@ const Form = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // const existingExpense = localStorage.getItem("expenseData") || [];
+    const existingExpense = JSON.parse(localStorage.getItem("expenseData") || "[]");
 
-    // const updateExpense = [...existingExpense, formData]
+    const updateExpense = [...existingExpense, formData]
 
-    localStorage.setItem("expenseData", JSON.stringify(formData));
+    localStorage.setItem("expenseData", JSON.stringify(updateExpense));
     alert("Expense saved!")
       
   };
