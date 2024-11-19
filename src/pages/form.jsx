@@ -1,29 +1,40 @@
 import React, { useState } from "react";
 
 const Form = () => {
-  const [formData, setFormData] = useState({
-    title: "",
-    price: "",
-    category: "Select Category",
-    date: "",
-  });
+    const [expenseTitle, setExpenseTitle]= useState("");
+    const [amount, setAmount] = useState(0);
+    const [category, setCategory] = useState("Food")
+    const [date, setDate] = useState("")
+    const [arrayOfObjects, setArrayOfObjects] = useState(
+        JSON.parse(localStorage.getItem("expenseData"))
+    )
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const existingExpense = JSON.parse(localStorage.getItem("expenseData") || "[]");
+    // const date = new Date().toLocaleDateString();
+    const expenseData = {
+      expenseTitle: expenseTitle,
+      category: category,
+      amount: amount,
+      date: date,
+    };
 
-    const updateExpense = [...existingExpense, formData]
+    const data = JSON.parse(localStorage.getItem("expenseData") || "[]");
 
-    localStorage.setItem("expenseData", JSON.stringify(updateExpense));
+    data.push(expenseData);
+
+    localStorage.setItem("expenseData", JSON.stringify(data));
     alert("Expense saved!")
+
+    setExpenseTitle("");
+    setAmount("");
+    setCategory("");
+    setDate("");
       
   };
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-100">
@@ -42,8 +53,7 @@ const Form = () => {
             type="text"
             name="title"
             id="title"
-            value={formData.title}
-            onChange={handleChange}
+            onChange={(e) => setExpenseTitle(e.target.value)}
             placeholder="Enter title of expense"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
@@ -51,17 +61,17 @@ const Form = () => {
 
         <div>
           <label
-            htmlFor="price"
+            htmlFor="amount"
             className="block text-sm font-medium text-gray-700"
           >
-            Enter the price:
+            Enter the amount:
           </label>
           <input
             type="number"
-            name="price"
-            id="price"
-            value={formData.price}
-            onChange={handleChange}
+            name="amount"
+            id="amount"
+            
+            onChange={(e)=> setAmount(e.target.value)}
             placeholder="Enter number"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
@@ -77,12 +87,14 @@ const Form = () => {
           <select
             id="category"
             name="category"
-            value={formData.category}
-            onChange={handleChange}
+            onChange={(e)=> setCategory(e.target.value)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           >
-            <option value="select">Select Category</option>
+            <option value="" disabled selected hidden>
+              Select Category
+            </option>
             <option value="entertainment">Entertainment</option>
+            <option value="food">Food</option>
             <option value="bills">Bills</option>
             <option value="fees">Fees</option>
             <option value="grocery">Grocery</option>
@@ -101,8 +113,9 @@ const Form = () => {
             type="date"
             name="date"
             id="date"
-            value={formData.date}
-            onChange={handleChange}
+            value={date}
+            onChange={(e)=>setDate(e.target.value)}
+            
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
