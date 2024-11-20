@@ -5,9 +5,9 @@ const Form = () => {
   const [amount, setAmount] = useState(0);
   const [category, setCategory] = useState("");
   const [date, setDate] = useState("");
-  const [arrayOfObjects, setArrayOfObjects] = useState(
-    JSON.parse(localStorage.getItem("expenseData")) || []
-  );
+  // const [arrayOfObjects, setArrayOfObjects] = useState(
+  //   JSON.parse(localStorage.getItem("expenseData")) || []
+  // );
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -22,8 +22,9 @@ const Form = () => {
     const data = JSON.parse(localStorage.getItem("expenseData") || "[]");
     data.push(expenseData);
 
+
     localStorage.setItem("expenseData", JSON.stringify(data));
-    setArrayOfObjects(data); 
+    // setArrayOfObjects(data); 
     alert("Expense saved!");
 
     setExpenseTitle("");
@@ -132,7 +133,7 @@ const Form = () => {
         </button>
       </form>
 
-      <div className="mt-8 w-full max-w-4xl">
+      {/* <div className="mt-8 w-full max-w-4xl">
         {arrayOfObjects.length > 0 ? (
           <table className="min-w-full bg-white shadow-lg rounded-lg">
             <thead>
@@ -162,7 +163,7 @@ const Form = () => {
             No expenses added yet.
           </p>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
