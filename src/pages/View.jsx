@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
+
 const View = () => {
   const [arrayOfObjects, setArrayOfObjects] = useState(
     JSON.parse(localStorage.getItem("expenseData")) || []
