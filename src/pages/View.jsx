@@ -1,6 +1,5 @@
-import React from "react";
-import { useState } from "react";
-
+import React, { useState } from "react";
+import { FaTrash } from "react-icons/fa";
 
 const View = () => {
   const [arrayOfObjects, setArrayOfObjects] = useState(
@@ -14,38 +13,36 @@ const View = () => {
   };
 
   return (
-    <div className="flex justify-center  min-h-screen bg-gray-100">
-      <div className="mt-10 w-full max-w-4xl">
+    <div className="flex justify-center  min-h-screen bg-gray-50">
+      <div className="mt-10 w-full max-w-5xl px-4">
         {arrayOfObjects.length > 0 ? (
-          <table className="min-w-full bg-white shadow-lg rounded-lg">
-            <thead>
-              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                <th className="py-3 px-6 text-left">Title</th>
-                <th className="py-3 px-6 text-left">Category</th>
-                <th className="py-3 px-6 text-left">Amount</th>
-                <th className="py-3 px-6 text-left">Date</th>
-                <th className="py-3 px-6 text-left">Action</th>
+          <table className="min-w-full bg-white shadow-xl rounded-lg overflow-hidden">
+            <thead className="bg-gray-200 text-gray-700 text-sm uppercase">
+              <tr>
+                <th className="py-3 px-6 text-left font-medium">Title</th>
+                <th className="py-3 px-6 text-left font-medium">Category</th>
+                <th className="py-3 px-6 text-left font-medium">Amount</th>
+                <th className="py-3 px-6 text-left font-medium">Date</th>
+                <th className="py-3 px-6 text-left font-medium">Action</th>
               </tr>
             </thead>
-            <tbody className="text-gray-600 text-sm font-light">
+            <tbody className="text-gray-700 text-sm">
               {arrayOfObjects.map((expense, index) => (
                 <tr
                   key={index}
-                  className="border-b border-gray-200 hover:bg-gray-100"
+                  className="border-b border-gray-200 hover:bg-gray-100 transition-all duration-200"
                 >
-                  <td className="py-3 px-6 text-left">
-                    {expense.expenseTitle}
-                  </td>
+                  <td className="py-3 px-6 text-left">{expense.expenseTitle}</td>
                   <td className="py-3 px-6 text-left">{expense.category}</td>
                   <td className="py-3 px-6 text-left">₹{expense.amount}</td>
                   <td className="py-3 px-6 text-left">{expense.date}</td>
                   <td className="py-3 px-6 text-left">
                     <button
                       onClick={() => handleDelete(index)}
-                      className="text-red-500 hover:text-red-700"
+                      className="text-red-500 hover:text-red-700 transition-all duration-200"
                       title="Delete"
                     >
-                      🗑️
+                      <FaTrash className="inline-block" />
                     </button>
                   </td>
                 </tr>
