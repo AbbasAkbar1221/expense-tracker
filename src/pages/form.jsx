@@ -22,15 +22,9 @@ const Form = () => {
     const data = JSON.parse(localStorage.getItem("expenseData") || "[]");
     data.push(expenseData);
 
-
     localStorage.setItem("expenseData", JSON.stringify(data));
 
     navigate('/view');
-
-    setExpenseTitle("");
-    setAmount(0);
-    setCategory("");
-    setDate("");
   };
 
   return (

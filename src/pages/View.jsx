@@ -54,20 +54,21 @@ const View = () => {
                           className="w-full p-2 border border-gray-300 rounded"
                         />
                       </td>
-                    <td className="py-3 px-6 text-left">
-                        <input
-                          type="Number"
-                          name="amount"
-                          value={expense.amount}
-                          onChange={(e) => handleInputChange(e, index)}
-                          className="w-full p-2 border border-gray-300 rounded"
-                        />
-                      </td>
+                    
                     <td className="py-3 px-6 text-left">
                         <input
                           type="text"
                           name="category"
                           value={expense.category}
+                          onChange={(e) => handleInputChange(e, index)}
+                          className="w-full p-2 border border-gray-300 rounded"
+                        />
+                      </td>
+                      <td className="py-3 px-6 text-left">
+                        <input
+                          type="Number"
+                          name="amount"
+                          value={expense.amount}
                           onChange={(e) => handleInputChange(e, index)}
                           className="w-full p-2 border border-gray-300 rounded"
                         />
