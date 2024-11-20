@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 
 const Form = () => {
-    const [expenseTitle, setExpenseTitle]= useState("");
-    const [amount, setAmount] = useState(0);
-    const [category, setCategory] = useState("Food")
-    const [date, setDate] = useState("")
-    const [arrayOfObjects, setArrayOfObjects] = useState(
-        JSON.parse(localStorage.getItem("expenseData"))
-    )
+  const [expenseTitle, setExpenseTitle] = useState("");
+  const [amount, setAmount] = useState(0);
+  const [category, setCategory] = useState("");
+  const [date, setDate] = useState("");
+  const [arrayOfObjects, setArrayOfObjects] = useState(
+    JSON.parse(localStorage.getItem("expenseData")) || []
+  );
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // const date = new Date().toLocaleDateString();
     const expenseData = {
       expenseTitle: expenseTitle,
       category: category,
@@ -21,23 +20,21 @@ const Form = () => {
     };
 
     const data = JSON.parse(localStorage.getItem("expenseData") || "[]");
-
     data.push(expenseData);
 
     localStorage.setItem("expenseData", JSON.stringify(data));
-    alert("Expense saved!")
+    setArrayOfObjects(data); 
+    alert("Expense saved!");
 
     setExpenseTitle("");
-    setAmount("");
+    setAmount(0);
     setCategory("");
     setDate("");
-      
   };
 
-  
-
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 p-4">
+      
       <form
         className="bg-white shadow-lg rounded-lg p-6 w-full max-w-md space-y-4"
         onSubmit={handleSubmit}
@@ -53,9 +50,11 @@ const Form = () => {
             type="text"
             name="title"
             id="title"
+            value={expenseTitle}
             onChange={(e) => setExpenseTitle(e.target.value)}
             placeholder="Enter title of expense"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            required
           />
         </div>
 
@@ -70,10 +69,13 @@ const Form = () => {
             type="number"
             name="amount"
             id="amount"
-            
-            onChange={(e)=> setAmount(e.target.value)}
+            value={amount || ''}
+            onFocus={()=> amount === 0 && setAmount('')}
+            onBlur={()=> setAmount(amount===''?0: Number(amount))}
+            onChange={(e) => setAmount(e.target.value === '' ? '' : Number(e.target.value))}
             placeholder="Enter number"
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            required
           />
         </div>
 
@@ -87,10 +89,12 @@ const Form = () => {
           <select
             id="category"
             name="category"
-            onChange={(e)=> setCategory(e.target.value)}
+            value={category}
+            required
+            onChange={(e) => setCategory(e.target.value)}
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm bg-white focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           >
-            <option value="" disabled selected hidden>
+            <option value="" disabled hidden>
               Select Category
             </option>
             <option value="entertainment">Entertainment</option>
@@ -114,8 +118,8 @@ const Form = () => {
             name="date"
             id="date"
             value={date}
-            onChange={(e)=>setDate(e.target.value)}
-            
+            onChange={(e) => setDate(e.target.value)}
+            required
             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
           />
         </div>
@@ -127,6 +131,38 @@ const Form = () => {
           Add Expense
         </button>
       </form>
+
+      <div className="mt-8 w-full max-w-4xl">
+        {arrayOfObjects.length > 0 ? (
+          <table className="min-w-full bg-white shadow-lg rounded-lg">
+            <thead>
+              <tr className="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
+                <th className="py-3 px-6 text-left">Title</th>
+                <th className="py-3 px-6 text-left">Category</th>
+                <th className="py-3 px-6 text-left">Amount</th>
+                <th className="py-3 px-6 text-left">Date</th>
+              </tr>
+            </thead>
+            <tbody className="text-gray-600 text-sm font-light">
+              {arrayOfObjects.map((expense, index) => (
+                <tr
+                  key={index}
+                  className="border-b border-gray-200 hover:bg-gray-100"
+                >
+                  <td className="py-3 px-6 text-left">{expense.expenseTitle}</td>
+                  <td className="py-3 px-6 text-left">{expense.category}</td>
+                  <td className="py-3 px-6 text-left">₹{expense.amount}</td>
+                  <td className="py-3 px-6 text-left">{expense.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-gray-600 text-sm text-center">
+            No expenses added yet.
+          </p>
+        )}
+      </div>
     </div>
   );
 };
