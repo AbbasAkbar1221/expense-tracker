@@ -6,7 +6,7 @@ const View = () => {
     JSON.parse(localStorage.getItem("expenseData")) || []
   );
 
-  const [editIndex , setEditIndex] = useState(null);
+  const [editIndex, setEditIndex] = useState(null);
 
   const handleDelete = (index) => {
     const updateArray = arrayOfObjects.filter((_, i) => i !== index);
@@ -14,14 +14,14 @@ const View = () => {
     localStorage.setItem("expenseData", JSON.stringify(updateArray));
   };
 
-  const handleInputChange = (e, index)=>{
-    const {name, value} = e.target;
+  const handleInputChange = (e, index) => {
+    const { name, value } = e.target;
     const updatedArray = arrayOfObjects.map((item, i) =>
       i === index ? { ...item, [name]: value } : item
     );
     setArrayOfObjects(updatedArray);
     localStorage.setItem("expenseData", JSON.stringify(updatedArray));
-  }
+  };
 
   return (
     <div className="flex justify-center  min-h-screen bg-gray-50">
@@ -45,7 +45,7 @@ const View = () => {
                 >
                   {editIndex === index ? (
                     <>
-                    <td className="py-3 px-6 text-left">
+                      <td className="py-3 px-6 text-left">
                         <input
                           type="text"
                           name="expenseTitle"
@@ -54,16 +54,26 @@ const View = () => {
                           className="w-full p-2 border border-gray-300 rounded"
                         />
                       </td>
-                    
-                    <td className="py-3 px-6 text-left">
-                        <input
-                          type="text"
+
+                      <td className="py-3 px-6 text-left">
+                        <select
                           name="category"
                           value={expense.category}
                           onChange={(e) => handleInputChange(e, index)}
                           className="w-full p-2 border border-gray-300 rounded"
-                        />
+                        >
+                          <option value="" disabled hidden>
+                            Select Category
+                          </option>
+                          <option value="Entertainment">Entertainment</option>
+                          <option value="Food">Food</option>
+                          <option value="Bills">Bills</option>
+                          <option value="Fees">Fees</option>
+                          <option value="Grocery">Grocery</option>
+                          <option value="Personal">Personal</option>
+                        </select>
                       </td>
+
                       <td className="py-3 px-6 text-left">
                         <input
                           type="Number"
@@ -73,7 +83,7 @@ const View = () => {
                           className="w-full p-2 border border-gray-300 rounded"
                         />
                       </td>
-                    <td className="py-3 px-6 text-left">
+                      <td className="py-3 px-6 text-left">
                         <input
                           type="date"
                           name="date"
@@ -92,32 +102,34 @@ const View = () => {
                         </button>
                       </td>
                     </>
-                  ):(
+                  ) : (
                     <>
-                  <td className="py-3 px-6 text-left">
-                    {expense.expenseTitle}
-                  </td>
-                  <td className="py-3 px-6 text-left">{expense.category}</td>
-                  <td className="py-3 px-6 text-left">₹{expense.amount}</td>
-                  <td className="py-3 px-6 text-left">{expense.date}</td>
-                  <td className="py-3 px-6 text-left">
-                    <button
-                      onClick={() => setEditIndex(index)}
-                      className="text-blue-500 hover:text-blue-700 transition-all duration-200 mr-2"
-                      title="Edit"
-                    >
-                      <FaEdit className="inline-block" />
-                    </button>
-                    <button
-                      onClick={() => handleDelete(index)}
-                      className="text-red-500 hover:text-red-700 transition-all duration-200"
-                      title="Delete"
-                    >
-                      <FaTrash className="inline-block" />
-                    </button>
-                  </td>
-                  </>
-                   )}
+                      <td className="py-3 px-6 text-left">
+                        {expense.expenseTitle}
+                      </td>
+                      <td className="py-3 px-6 text-left">
+                        {expense.category}
+                      </td>
+                      <td className="py-3 px-6 text-left">₹{expense.amount}</td>
+                      <td className="py-3 px-6 text-left">{expense.date}</td>
+                      <td className="py-3 px-6 text-left">
+                        <button
+                          onClick={() => setEditIndex(index)}
+                          className="text-blue-500 hover:text-blue-700 transition-all duration-200 mr-2"
+                          title="Edit"
+                        >
+                          <FaEdit className="inline-block" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(index)}
+                          className="text-red-500 hover:text-red-700 transition-all duration-200"
+                          title="Delete"
+                        >
+                          <FaTrash className="inline-block" />
+                        </button>
+                      </td>
+                    </>
+                  )}
                 </tr>
               ))}
             </tbody>

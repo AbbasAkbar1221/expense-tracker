@@ -92,12 +92,12 @@ const Form = () => {
             <option value="" disabled hidden>
               Select Category
             </option>
-            <option value="entertainment">Entertainment</option>
-            <option value="food">Food</option>
-            <option value="bills">Bills</option>
-            <option value="fees">Fees</option>
-            <option value="grocery">Grocery</option>
-            <option value="personal">Personal</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Food">Food</option>
+            <option value="Bills">Bills</option>
+            <option value="Fees">Fees</option>
+            <option value="Grocery">Grocery</option>
+            <option value="Personal">Personal</option>
           </select>
         </div>
 
